@@ -1,0 +1,24 @@
+stages:
+- build
+- scan
+
+build:
+  stage: build
+  image: gradle:alpine
+
+  script: 
+  - sh ./gradlew dependencies > .debricked-gradle-dependencies.txt
+
+  artifacts:
+    paths:
+    - .debricked-gradle-dependencies.txt
+    expire_in: 1 day
+
+debricked:
+  stage: scan
+  image:
+    name: debricked/debricked-scan
+    entrypoint: ["/gitlab-ci.sh"]
+  script: echo "Done"
+  variables:
+    DEBRICKED_TOKEN: $DEBRICKED_TOKEN

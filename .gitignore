@@ -1,0 +1,3 @@
+.gradle/
+/.debricked-gradle-dependencies.txt
+.idea/
